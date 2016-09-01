@@ -21,8 +21,9 @@ It’s built with https://github.com/kiorky/SOAPpy[SOAPpy], a Simple to use SOAP
 * Python 2.7
 * https://pypi.python.org/pypi/bottle/[bottle]
 * https://pypi.python.org/pypi/SOAPpy/[SOAPpy]
-* https://pypi.python.org/pypi/PyXML/0.8.4[PyXml]
 * https://pypi.python.org/pypi/fpconst[fpconst]
+* ConfigParser
+
 
 You must also enable the UCP service: 
 ```

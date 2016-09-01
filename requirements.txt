@@ -1,4 +1,4 @@
 bottle>=0.12.8
-pyxml>=0.8.4
 fpconst>=0.7.2
 soappy>=0.11.6
+ConfigParser

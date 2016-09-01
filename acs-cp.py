@@ -9,8 +9,6 @@ from os import path
 import ssl
 from SOAPpy import SOAPProxy
 
-ssl._create_default_https_context = ssl._create_unverified_context
-
 @get('/')
 def get_index():
     return index_tpl()
