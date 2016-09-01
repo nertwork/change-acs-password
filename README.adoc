@@ -24,6 +24,7 @@ It’s built with https://github.com/kiorky/SOAPpy[SOAPpy], a Simple to use SOAP
 * https://pypi.python.org/pypi/fpconst[fpconst]
 * ConfigParser
 
+Valid SSL on your ACS and certificate chain on the server running this script
 
 You must also enable the UCP service: 
 ```
@@ -31,6 +32,7 @@ acs config-web-interface ucp enable
 ```
 
 Or you can use this guide: http://www.cisco.com/c/en/us/td/docs/net_mgmt/cisco_secure_access_control_system/5-1/sdk/sdkguide/ucp.html[EnablingUCP]
+
 
 
 
@@ -79,16 +81,12 @@ It’s not so well known, but uWSGI allows to “mount” multiple application i
 .Sample uWSGI configuration:
 ----
 [uwsgi]
-plugins = python34
-socket = /run/uwsgi/main.sock
-chdir = /var/www/scripts
-logger = file:/var/log/uwsgi/main.log
-processes = 1
-threads = 2
-# map URI paths to applications
-mount = /admin/change-password=change-password/acs-cp.py
-#mount = /admin/change-world=change-world/acs-cp.py
-manage-script-name = true
+process = 4
+plugins = python
+wsgi-file = /usr/share/nginx/www/change-acs-password/acs-cp.py
+uid = www-data
+gid = www-data
+
 ----
 
 [source, nginx]
@@ -102,9 +100,9 @@ server {
     ssl_certificate_key /etc/ssl/nginx/nginx.key;
 
     # uWSGI scripts
-    location /admin/ {
-        uwsgi_pass  unix:/run/uwsgi/main.sock;
-        include     uwsgi_params;
+    location / {
+      uwsgi_pass  unix:/run/uwsgi/app/acs-cp/socket;
+      include     uwsgi_params;
     }
 }
 ----
